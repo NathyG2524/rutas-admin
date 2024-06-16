@@ -1,0 +1,55 @@
+name: Release CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build
+
+    - name: Create a backup
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        password: ${{ secrets.VPS_PASSWORD }}
+        port: ${{ secrets.VPS_PORT }}
+        script: |
+          rm -rf /${{ secrets.VPS_USER }}-website/temp-admin/
+          cp -r ./${{ secrets.VPS_USER }}-website/${{ secrets.VPS_USER }}-admin/ temp-admin
+    - name: Copy files to rutas-admin folder on vps
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        password: ${{ secrets.VPS_PASSWORD }}
+        port: ${{ secrets.VPS_PORT }}
+        source: "./*"
+        target: "/home/${{ secrets.VPS_USER }}/${{ secrets.VPS_USER }}-website/${{ secrets.VPS_USER }}-admin/"
+
+    - name: SSH into VPS and start frontend Docker Compose
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        password: ${{ secrets.VPS_PASSWORD }}
+        port: ${{ secrets.VPS_PORT }}
+        script: |
+          cd /home/${{ secrets.VPS_USER }}/${{ secrets.VPS_USER }}-website/ &&  docker compose up -d --build rutas-admin
