@@ -42,21 +42,13 @@ export const rutasApi = createApi({
     //   },
     // }),
     updateTrip: builder.mutation({
-      query: ( {id, formData }) => {
-        // const formData = new FormData();
-
-        // formData.append("file", file);
-        // formData.append("jsonBody", JSON.stringify(jsonData));
-        return {
-          url: `/upcoming-trips/${id}`,
-          method: "PATCH",
-          body: formData,
-          // headers: {
-          //   "Content-Type": "multipart/form-data",
-          // },
-        };
-      },
+      query: ({ id, ...formData }) => ({
+        url: `/upcoming-trips/${id}`,
+        method: "PATCH",
+        body: formData, // Send the updated fields correctly
+      }),
     }),
+    
     deleteTrip: builder.mutation({
       query: (id) => ({
         url: `upcoming-trips/${id.id}`,

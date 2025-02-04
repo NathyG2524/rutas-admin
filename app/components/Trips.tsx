@@ -10,34 +10,49 @@ const Trips: React.FC = () => {
     isLoading,
     isSuccess,
     isError,
-    error,
   } = useGetTripsQuery({});
 
   const [deleteTrip] = useDeleteTripMutation();
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteTrip({ id }).unwrap();
+    } catch (error) {
+      console.error("Failed to delete trip:", error);
+    }
+  };
 
   let content;
   if (isLoading) {
     content = <Loading />;
   } else if (isSuccess) {
     content = (
-      <div className="grid  sm:grid-cols-2 gap-4 lg:gap-8 m-auto">
-        {trips.items?.map((trip: { id: React.Key | null | undefined; coverPhoto: { filename: any; }[]; title: String; price: number; startedDate: any; numberOfDays: number; description: String; }) => (
-          <div key={trip.id} className="flex flex-col">
-            <div>
+      <div className="grid sm:grid-cols-2 gap-4 lg:gap-8 m-auto">
+        {trips.items?.map((trip: { 
+          id: string;
+          coverPhoto: { filename: string }[];
+          title: string;
+          price: number;
+          startedDate: string;
+          numberOfDays: number;
+          description: string;
+        }) => (
+          <div key={trip.id} className="flex flex-col bg-white p-4 rounded-lg shadow-md">
+            <div className="flex justify-between mb-2">
               <Link href={`/EditTrip/${trip.id}`}>
-                <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                <button className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition">
                   Edit
                 </button>
               </Link>
               <button
-                onClick={() => deleteTrip({ id: trip.id })}
-                className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-              > 
+                onClick={() => handleDelete(trip.id)}
+                className="bg-red-500 text-white font-semibold py-2 px-4 rounded hover:bg-red-600 transition"
+              >
                 Delete
               </button>
             </div>
             <Link href={`/UpcomingTrips/${trip.id}`}>
-              <div>
+              <div className="cursor-pointer">
                 <UpcomingCards
                   Image={trip.coverPhoto[0]?.filename}
                   Title={trip.title}
@@ -53,18 +68,21 @@ const Trips: React.FC = () => {
       </div>
     );
   } else if (isError) {
-    // content = <p>{error}</p>;
+    content = <p className="text-red-500 text-center">Failed to load trips.</p>;
   }
 
   return (
-    <>
-      <div className="flex flex-col   lg:gap-6 mt-8">
-        <div className="justify-self-center m-auto">
-          <h2 className="text-4xl font-medium capitalize pb-8">Trips</h2>
-        </div>
-        <div className="m-auto">{content}</div>
+    <div className="flex flex-col lg:gap-6 mt-8">
+      <div className="flex justify-between items-center m-auto w-full max-w-4xl">
+        <h2 className="text-4xl font-medium capitalize pb-4">Trips</h2>
+        {/* <Link href="/AddTrip">
+          <button className="bg-green-500 text-white font-semibold py-2 px-4 rounded hover:bg-green-600 transition">
+            Add Trip
+          </button>
+        </Link> */}
       </div>
-    </>
+      <div className="m-auto w-full max-w-4xl">{content}</div>
+    </div>
   );
 };
 
