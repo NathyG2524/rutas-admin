@@ -10,6 +10,7 @@ const Trips: React.FC = () => {
     isLoading,
     isSuccess,
     isError,
+    refetch
   } = useGetTripsQuery({});
 
   const [deleteTrip] = useDeleteTripMutation();
@@ -17,6 +18,7 @@ const Trips: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       await deleteTrip({ id }).unwrap();
+      refetch()
     } catch (error) {
       console.error("Failed to delete trip:", error);
     }
