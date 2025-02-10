@@ -2,13 +2,22 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const rutasApi = createApi({
   reducerPath: "rutasApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://93.127.163.40:4000/" }),
+  // baseQuery: fetchBaseQuery({ baseUrl: "http://93.127.163.40:4000/" }),
   // baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3100" }),
   // tagTypes: ['Trips'],
+  baseQuery: fetchBaseQuery({ baseUrl: "http://93.127.163.40:4000/",
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem('accessToken'); // Retrieve token from localStorage
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`); // Attach token
+      }
+      return headers;
+    },
+   }),
   endpoints: (builder) => ({
     getTrips: builder.query({
       query: (query) => ({
-       url:  `/upcoming-trips/`,
+       url:  `/upcoming-trips`,
        params: query 
       })
     }),
