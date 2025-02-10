@@ -17,7 +17,7 @@ const LoginForm = () => {
     setIsClient(true);
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setCredentials({
       ...credentials,
@@ -25,7 +25,7 @@ const LoginForm = () => {
     });
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e:any) => {
     e.preventDefault();
     try {
       const { access_token, refresh_token } = await login(credentials).unwrap();
