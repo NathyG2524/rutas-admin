@@ -24,6 +24,7 @@ export const rutasApi = createApi({
       query: () => "/private-trips",
     }),
 
+    
     getTrip: builder.query({
       query: (id) => `/upcoming-trips/${id}`,
     }),
@@ -70,6 +71,7 @@ export const {
   useGetTripsQuery,
   useGetReportQuery,
   useGetPrivateTripsQuery,
+  // useGetPrivateTripQuery,
   useGetTripQuery,
 //   // useGetImageQuery,
 //   useUpdateTripMutation,

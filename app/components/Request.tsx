@@ -1,7 +1,9 @@
 import * as React from "react";
-import { useGetPrivateTripsQuery } from "../../features/api/apiSlice";
+import { useGetPrivateTripQuery } from "@/store/rutas.api";
 import Loading from "./Loading";
 import { useState } from "react";
+import router from "next/router";
+
 
 interface Trip {
   id: string;
@@ -34,7 +36,7 @@ const Request: React.FC = () => {
     isSuccess,
     isError,
     error,
-  } = useGetPrivateTripsQuery({});
+  } = useGetPrivateTripQuery({});
 
   let content;
   if (isLoading) {
@@ -88,8 +90,12 @@ const Request: React.FC = () => {
   }
   return (
     <main
+    
+    
       className="flex-1 bg-gray-100 dark:bg-gray-900 overflow-y-auto transition duration-500 ease-in-out w-full"
     >
+      
+      
       <div className="flex flex-col px-24 py-12 text-gray-700 dark:text-gray-500 transition duration-500 ease-in-out">
         <h2 className="text-4xl font-medium capitalize">Private Trips</h2>
         <div className="mt-1 mb-4 flex flex-row items-center justify-between"></div>
@@ -119,6 +125,7 @@ const Card: React.FC<CardProps> = (props) => {
     hour: "numeric",
   });
   return (
+    
     <div className="flex flex-col mt-2">
       <div className="flex flex-row mt-2">
         <div className="flex w-full items-center justify-between bg-white dark:bg-gray-800 px-8 py-6 border-l-4 border-green-500 dark:border-green-300">
@@ -222,10 +229,14 @@ const Detail: React.FC<DetailProps> = (props) => {
     hour: "numeric",
   });
   return (
+
     <div className="min-h-screen flex items-center justify-center px-4 py-10">
       <div className="max-w-4xl  bg-white w-full rounded-lg shadow-xl">
+
+
         <div className="p-4 border-b">
           <h2 className="text-2xl ">Trip Request</h2>
+
           <p className="text-sm text-gray-500">Personal details </p>
         </div>
         <div>
