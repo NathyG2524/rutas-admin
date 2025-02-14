@@ -3,6 +3,7 @@
 import { useLoginMutation } from '@/store/rutas.api';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import '@mantine/core/styles.css';
 
 const LoginForm = () => {
   const [login, { isLoading, error }] = useLoginMutation();

@@ -21,19 +21,25 @@ export function UpcomingCards(prop: Card) {
 
   const handleDownload = async () => {
     try {
+      const token = localStorage.getItem("accessToken"); // Retrieve token
+  
       const response = await axios.get(
         `http://93.127.163.40:4000/upcoming-trips/download/${prop.Image}`,
         {
           responseType: "blob",
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "", // Attach token if available
+          },
         }
       );
-
+  
       const url = window.URL.createObjectURL(new Blob([response.data]));
       setCover(url);
     } catch (error) {
       console.error("Error downloading file:", error);
     }
   };
+  
   const description = prop.Description?.slice(0, 70);
 
   const date = new Date(`${prop.StartDate}`);
