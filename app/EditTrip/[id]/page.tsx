@@ -111,6 +111,7 @@ const EditTrip = () => {
     if (itineraryForm) {
       setDraft(true);
       form.setValues({
+        ...form.values, // Preserve existing form values
         days: itineraryForm.route,
         place: itineraryForm.value,
         itineraryBody: itineraryForm.description,
@@ -145,6 +146,7 @@ const EditTrip = () => {
 
     // Reset itinerary input fields
     form.setValues({
+      ...form.values, // Preserve other form values
       days: "",
       place: "",
       itineraryBody: "",
@@ -176,7 +178,7 @@ const EditTrip = () => {
         },
       });
       console.log("Update successful", res);
-      router.push("/dashboard"); // Redirect to trips page after successful update
+      router.push("/trips"); // Redirect to trips page after successful update
     } catch (error) {
       console.error("Error updating data", error);
     }
@@ -190,6 +192,7 @@ const EditTrip = () => {
     <div className="m-auto flex flex-col gap-4 w-8/12 my-4">
       <h2 className="text-4xl font-medium capitalize pb-4 m-auto">Edit Trip</h2>
       <form onSubmit={form.onSubmit(handleUpdate)} className="flex flex-col gap-8 m-auto w-11/12">
+        {/* Form fields */}
         <TextInput
           label="Title"
           placeholder="Enter Title"
@@ -221,7 +224,7 @@ const EditTrip = () => {
         <Select
           label="Country"
           placeholder="Select Country"
-          data={countries.map((country:any) => ({ value: country.name, label: country.name }))}
+          data={countries.map((country) => ({ value: country.name, label: country.name }))}
           {...form.getInputProps("country")}
         />
         <TextInput
