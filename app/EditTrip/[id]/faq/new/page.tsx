@@ -14,7 +14,7 @@ const faqSchema = z.object({
   question_es: z.string().min(1, "Question (ES) is required"),
   answer_en: z.string().min(1, "Answer (EN) is required"),
   answer_es: z.string().min(1, "Answer (ES) is required"),
-  type: z.enum(["logistic", "safety", "general"]),
+  type: z.enum(["Logistics", "Information about the route", "Reserve and Condition", "user Information"]),
   upcomingTripId: z.string().uuid("Invalid Trip ID"),
 });
 
