@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const rutasApi = createApi({
   reducerPath: "rutasApi",
+  tagTypes:['faq'],
   baseQuery: fetchBaseQuery({ baseUrl: "http://93.127.163.40:4000/",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('accessToken'); // Retrieve token from localStorage
@@ -53,6 +54,38 @@ export const rutasApi = createApi({
     //     return { data: fileUrl };
     //   },
     // }),
+    createFaq: builder.mutation({
+      query: (formData) => ({
+        url: "/upcoming-trip-info",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ['faq'],
+    }),
+    getFaqByTripId: builder.query({
+      query: (tripId) => `/upcoming-trip-info/list/upcomingTripId/${tripId}`,
+      providesTags: ['faq']
+    }),
+    getFaqById: builder.query({
+      query: (id) => `/upcoming-trip-info/${id}`,
+      providesTags: ['faq'],
+    }),
+    deleteFaq: builder.mutation({
+      query: (faqId) => ({
+        url: `/upcoming-trip-info/${faqId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ['faq']
+    }),
+    updateFaq: builder.mutation({
+      query: ({ faqId, updatedData }) => ({
+        url: `/upcoming-trip-info/${faqId}`,
+        method: "PUT",
+        body: updatedData,
+      }),
+      invalidatesTags: ['faq'],
+    }),
+    
     updateTrip: builder.mutation({
       query: ({ id, ...formData }) => ({
         url: `/upcoming-trips/${id}`,
@@ -97,4 +130,9 @@ export const {
   useGetPrivateTripQuery,
   useLoginMutation, // Hook for login
   useLogoutMutation, // Hook for logout
+  useCreateFaqMutation,
+  useGetFaqByTripIdQuery,
+  useGetFaqByIdQuery,
+  useDeleteFaqMutation,
+  useUpdateFaqMutation
 } = rutasApi;

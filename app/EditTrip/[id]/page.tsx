@@ -3,7 +3,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useForm } from "@mantine/form";
 import { DateInput, DatePicker } from "@mantine/dates";
-import { Select, TextInput, NumberInput, FileInput, Button, Textarea } from "@mantine/core";
+import { Select, TextInput, NumberInput, FileInput, Button, Textarea, Text } from "@mantine/core";
 import countries from "../../../data/countries.json";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
@@ -303,6 +303,9 @@ const EditTrip = () => {
             </ul>
           </div>
         )}
+        <Text className="text-2xl" fw={700}>FAQ</Text>
+        <Button className="max-w-fit" onClick={() => router.push(`./${id}/faq`)}>Manage FAQ</Button>
+        {/* <Button className="max-w-fit" onClick={() => router.push(`./${id}/faq`)}>Add FAQ</Button> */}
         <Button type="submit" color="green">
           Update Trip
         </Button>
