@@ -77,7 +77,7 @@ export default function CreateFaqForm() {
         <TextInput className="py-2"  label="Answer (Spanish)" {...form.getInputProps("answer_es")} />
         <Select
           label="Type"
-          data={["logistic", "safety", "general"]}
+          data={["Logistics", "Information about the route", "Reserve and Condition", "user Information"]}
           {...form.getInputProps("type")}
         />
         {/* <TextInput label="Upcoming Trip ID" {...form.getInputProps("upcomingTripId")} disabled /> */}

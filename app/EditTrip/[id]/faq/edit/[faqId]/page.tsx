@@ -22,7 +22,7 @@ export default function EditFaq() {
       question_es: "",
       answer_en: "",
       answer_es: "",
-      type: "logistic",
+      type: "",
       upcomingTripId: "", // Initialize with an empty string or value you need
     },
   });
@@ -35,7 +35,7 @@ export default function EditFaq() {
         question_es: data.question?.es || "",
         answer_en: data.answer?.en || "",
         answer_es: data.answer?.es || "",
-        type: data.type || "logistic",
+        type: data.type ,
         upcomingTripId: data.upcomingTripId || "", // Use the dynamic value from API response
       });
     }
