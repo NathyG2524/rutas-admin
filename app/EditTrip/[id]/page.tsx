@@ -64,7 +64,7 @@ const EditTrip = () => {
     const fetchTrip = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const res = await axios.get(`http://93.127.163.40:4000/upcoming-trips/${id}`, {
+        const res = await axios.get(`https://api.rutasdeserendipia.com/upcoming-trips/${id}`, {
           headers: {
             Authorization: token ? `Bearer ${token}` : "",
           },
@@ -171,7 +171,7 @@ const EditTrip = () => {
 
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await axios.put(`http://93.127.163.40:4000/upcoming-trips/${id}`, formData, {
+      const res = await axios.put(`https://api.rutasdeserendipia.com/upcoming-trips/${id}`, formData, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
           "Content-Type": "multipart/form-data",

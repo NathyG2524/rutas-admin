@@ -24,7 +24,7 @@ export function UpcomingCards(prop: Card) {
       const token = localStorage.getItem("accessToken"); // Retrieve token
   
       const response = await axios.get(
-        `http://93.127.163.40:4000/upcoming-trips/download/${prop?.Image}`,
+        `https://api.rutasdeserendipia.com/upcoming-trips/download/${prop?.Image}`,
         {
           responseType: "blob",
           headers: {

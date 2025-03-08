@@ -53,7 +53,7 @@ const Trips: React.FC = () => {
                 Delete
               </button>
             </div>
-            <Link href={`/UpcomingTrips/${trip.id}`}>
+            <Link href={`/TripDetail/${trip.id}`}>
               <div className="cursor-pointer">
                 <UpcomingCards
                   Image={trip.coverPhoto[0]?.filename}

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const rutasApi = createApi({
   reducerPath: "rutasApi",
   tagTypes:['faq'],
-  baseQuery: fetchBaseQuery({ baseUrl: "http://93.127.163.40:4000/",
+  baseQuery: fetchBaseQuery({ baseUrl: "https://api.rutasdeserendipia.com/",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('accessToken'); // Retrieve token from localStorage
       if (token) {
@@ -12,8 +12,7 @@ export const rutasApi = createApi({
       return headers;
     },
    }),
-  // baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3100" }),
-  // tagTypes: ['Trips'],
+ 
   endpoints: (builder) => ({
     getTrips: builder.query({
       query: (query) => ({
@@ -69,6 +68,14 @@ export const rutasApi = createApi({
     getFaqById: builder.query({
       query: (id) => `/upcoming-trip-info/${id}`,
       providesTags: ['faq'],
+    }),
+    getTripDetail: builder.query({
+      query: (id) => `/reservers/${id}`,
+      
+    }),
+    getReserveList: builder.query({
+      query: (id) => `/reservers/list/upcomingTripId/${id}`,
+      
     }),
     deleteFaq: builder.mutation({
       query: (faqId) => ({
@@ -134,5 +141,7 @@ export const {
   useGetFaqByTripIdQuery,
   useGetFaqByIdQuery,
   useDeleteFaqMutation,
-  useUpdateFaqMutation
+  useUpdateFaqMutation,
+  useGetTripDetailQuery,
+  useGetReserveListQuery
 } = rutasApi;

@@ -2,10 +2,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const rutasApi = createApi({
   reducerPath: "rutasApi",
-  // baseQuery: fetchBaseQuery({ baseUrl: "http://93.127.163.40:4000/" }),
+  // baseQuery: fetchBaseQuery({ baseUrl: "https://api.rutasdeserendipia.com/" }),
   // baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3100" }),
   // tagTypes: ['Trips'],
-  baseQuery: fetchBaseQuery({ baseUrl: "http://93.127.163.40:4000/",
+  baseQuery: fetchBaseQuery({ baseUrl: "https://api.rutasdeserendipia.com/",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('accessToken'); // Retrieve token from localStorage
       if (token) {
