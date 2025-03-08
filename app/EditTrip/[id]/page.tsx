@@ -47,15 +47,17 @@ const EditTrip = () => {
       place: "",
       itineraryBody: "",
       description: "",
+      totalSeats:0
     },
     validate: {
       title: (value) => (value.trim() ? null : "Title is required"),
       price: (value) => (value > 0 ? null : "Price must be greater than 0"),
       journey: (value) => (value ? null : "Journey type is required"),
-      country: (value) => (value ? null : "Country is required"),
+      // country: (value) => (value ? null : "Country is required"),
       date: (value) => (value ? null : "Date is required"),
       totalDays: (value) => (value > 0 ? null : "Total days must be greater than 0"),
       map: (value) => (value.trim() ? null : "Map link is required"),
+      
     },
   });
 
@@ -81,6 +83,7 @@ const EditTrip = () => {
           totalDays: trip.numberOfDays,
           map: trip.location,
           description: trip.description,
+          totalSeats: trip.numberOfSeats
         });
 
         // Populate itinerary details
@@ -162,6 +165,7 @@ const EditTrip = () => {
       formData.append("startedDate", form.values.date.toISOString());
     }
     formData.append("numberOfDays", form.values.totalDays.toString());
+    formData.append("numberOfSeats", form.values.totalSeats.toString());
     formData.append("location", form.values.map);
     formData.append("itineraryDetails", JSON.stringify(daysList));
     formData.append("description", form.values.description);
@@ -171,16 +175,18 @@ const EditTrip = () => {
 
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await axios.put(`https://api.rutasdeserendipia.com/upcoming-trips/${id}`, formData, {
+      const res = await axios.patch(`https://api.rutasdeserendipia.com/upcoming-trips/${id}`, formData, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
           "Content-Type": "multipart/form-data",
         },
       });
       console.log("Update successful", res);
-      router.push("/trips"); // Redirect to trips page after successful update
+      alert('Update successful')
+      // router.push("/trips"); // Redirect to trips page after successful update
     } catch (error) {
       console.error("Error updating data", error);
+      alert('Error updating data')
     }
   };
 
@@ -221,6 +227,11 @@ const EditTrip = () => {
           placeholder="Enter Total Days"
           {...form.getInputProps("totalDays")}
         />
+          <NumberInput
+                  label="Total Seats"
+                  placeholder="Enter Total Seats"
+                  {...form.getInputProps("totalSeats")}
+                />
         <Select
           label="Country"
           placeholder="Select Country"
@@ -232,6 +243,7 @@ const EditTrip = () => {
           placeholder="Enter Map Link"
           {...form.getInputProps("map")}
         />
+       
         <FileInput
           label="Cover Photo"
           multiple
@@ -241,6 +253,11 @@ const EditTrip = () => {
           label="Photos"
           multiple
           onChange={handleFileInput1}
+        />
+           <Textarea
+          label="Description"
+          placeholder="Enter Description"
+          {...form.getInputProps("description")}
         />
         <TextInput
           label="Days"
@@ -257,11 +274,7 @@ const EditTrip = () => {
           placeholder="Enter Itinerary"
           {...form.getInputProps("itineraryBody")}
         />
-        <Textarea
-          label="Description"
-          placeholder="Enter Description"
-          {...form.getInputProps("description")}
-        />
+      
         <div className="flex gap-4">
           <Button
             type="button"
