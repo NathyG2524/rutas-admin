@@ -8,6 +8,7 @@ import countries from "../../data/countries.json";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import "dayjs/locale/en"; // Import locale if needed
+import { useRouter } from "next/navigation";
 // import { notifications } from "@mantine/notifications";
 
 
@@ -31,7 +32,7 @@ const CreateTrip = () => {
   const [daysList, setDaysList] = useState<Day[]>([]);
   const [editItinerary, setEditItinerary] = useState<string>("");
   const [draft, setDraft] = useState<boolean>(false);
-
+  const router = useRouter()
   const form = useForm({
     initialValues: {
       title: "",
@@ -148,6 +149,8 @@ const CreateTrip = () => {
       //   message: "Trip uploaded successfully!",
       //   color: "green",
       // });
+      alert(`Upload successful`)
+      form.reset();
     } catch (error) {
       console.error("Error uploading data", error);
       // showNotification({
@@ -155,6 +158,7 @@ const CreateTrip = () => {
       //   message: "Failed to upload trip. Please try again.",
       //   color: "red",
       // });
+      alert('Failed to upload trip. Please try again.')
     }
   };
 
