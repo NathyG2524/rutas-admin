@@ -200,28 +200,33 @@ const EditTrip = () => {
       <form onSubmit={form.onSubmit(handleUpdate)} className="flex flex-col gap-8 m-auto w-11/12">
         {/* Form fields */}
         <TextInput
-          label="Title"
-          placeholder="Enter Title"
-          {...form.getInputProps("title")}
-        />
-        <NumberInput
-          label="Price"
-          placeholder="Enter Price"
-          {...form.getInputProps("price")}
-        />
-        <Select
-          label="Journey"
-          placeholder="Select Journey"
-          data={Journeys}
-          {...form.getInputProps("journey")}
-        />
-        <DateInput
-          label="Starting Date"
-          placeholder="Select Starting Date"
-          minDate={new Date()}
-          value={form.values.date}
-          onChange={(date) => form.setFieldValue("date", date)}
-        />
+                  label="Title"
+                  placeholder="Enter Title"
+                  {...form.getInputProps("title")}
+                />
+                <TextInput
+                  label="SubTitle"
+                  placeholder="Enter SubTitle"
+                  {...form.getInputProps("body")}
+                />
+                <NumberInput
+                  label="Price"
+                  placeholder="Enter Price"
+                  {...form.getInputProps("price")}
+                />
+                <TextInput
+                  label="Journey"
+                  placeholder="Journey"
+                  // data={Journeys}
+                  {...form.getInputProps("journey")}
+                />
+                <DateInput
+                type="range"
+                  label="Starting Date"
+                  placeholder="Select Starting Date"
+                  minDate={new Date()}
+                  {...form.getInputProps("date")}
+                />
         <NumberInput
           label="Total Days"
           placeholder="Enter Total Days"

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { useForm } from "@mantine/form";
-import { DateInput, DatePicker } from "@mantine/dates";
+import { DatePickerInput, DatePicker } from "@mantine/dates";
 import '@mantine/dates/styles.css';
 import { Select, TextInput, NumberInput, FileInput, Button, Textarea, Text, Notification } from "@mantine/core";
 import countries from "../../data/countries.json";
@@ -39,7 +39,7 @@ const CreateTrip = () => {
       price: 0,
       journey: "",
       country: "",
-      date: null as Date | null,
+      date: [null, null] as [Date | null, Date | null],
       totalDays: 0,
       map: "",
       days: "",
@@ -121,17 +121,20 @@ const CreateTrip = () => {
     formData.append("title", form.values.title);
     formData.append("price", form.values.price.toString());
     formData.append("journey", form.values.journey);
-    formData.append("startedDate", form.values.date?.toISOString() || "");
+    // formData.append("startedDate", form.values.date?.toISOString() || "");
     formData.append("numberOfDays", form.values.totalDays.toString());
     formData.append("numberOfSeats", form.values.totalSeats?.toString());
     formData.append("seatsLeft", form.values.totalSeats?.toString());
     formData.append("location", form.values.map);
     formData.append("itineraryDetails", JSON.stringify(daysList));
     formData.append("description", form.values.title);
-    formData.append("body", form.values.title);
+    formData.append("body", form.values.body);
     formData.append("aboutPayment", JSON.stringify(daysList));
     formData.append("aboutTour", JSON.stringify(daysList));
 
+    const [startDate, endDate] = form.values.date;
+formData.append("startedDate", startDate ? startDate.toISOString() : "");
+formData.append("endedDate", endDate ? endDate.toISOString() : "");
     selectedFiles1.forEach((file) => formData.append("photos", file));
     selectedFiles.forEach((file) => formData.append("coverPhoto", file));
 
@@ -171,19 +174,25 @@ const CreateTrip = () => {
           placeholder="Enter Title"
           {...form.getInputProps("title")}
         />
+        <TextInput
+          label="SubTitle"
+          placeholder="Enter SubTitle"
+          {...form.getInputProps("body")}
+        />
         <NumberInput
           label="Price"
           placeholder="Enter Price"
           {...form.getInputProps("price")}
         />
-        <Select
+        <TextInput
           label="Journey"
-          placeholder="Select Journey"
-          data={Journeys}
+          placeholder="Journey"
+          // data={Journeys}
           {...form.getInputProps("journey")}
         />
-        <DateInput
-          label="Starting Date"
+        <DatePickerInput
+        type="range"
+          label="Date Range"
           placeholder="Select Starting Date"
           minDate={new Date()}
           {...form.getInputProps("date")}
